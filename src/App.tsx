@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormControl, Select, MenuItem } from "@material-ui/core";
 import "./App.css";
 import { Countries, CountriesResult } from "./interfaces/result.interface";
+import Infobox from "./components/Infobox";
 
 const App: React.FC = () => {
   const [countries, setCountries] = useState<Countries[]>([]);
@@ -24,16 +25,16 @@ const App: React.FC = () => {
           );
 
           setCountries(countries);
-        })
+        });
     };
     getData();
   }, []);
 
-  const countryChange = async (e:any) => {
-    const countryCode:string = e.target.value;
+  const countryChange = async (e: any) => {
+    const countryCode: string = e.target.value;
     console.log(countryCode);
     setCountry(countryCode);
-  }
+  };
 
   return (
     <div className="App">
@@ -47,6 +48,11 @@ const App: React.FC = () => {
             })}
           </Select>
         </FormControl>
+      </div>
+      <div className="app_stats">
+        <Infobox title="Coronavirus Cases" total={2000} cases={123}/>
+        <Infobox title="Recovered" total={2000} cases={1234}/>
+        <Infobox title="Deaths" total={2000} cases={12345}/>
       </div>
     </div>
   );
