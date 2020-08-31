@@ -25,20 +25,23 @@ const App: React.FC = () => {
 
           setCountries(countries);
         })
-        .catch((err) => {
-          console.log(err);
-        });
     };
     getData();
   }, []);
+
+  const countryChange = async (e:any) => {
+    const countryCode:string = e.target.value;
+    console.log(countryCode);
+    setCountry(countryCode);
+  }
 
   return (
     <div className="App">
       <div className="app_header">
         <h1>COVID-19 TRACKER</h1>
         <FormControl className="app_dropbox">
-          <Select variant="outlined" value={country}>
-            <MenuItem value="worldwide">WorldWide</MenuItem>
+          <Select variant="outlined" onChange={countryChange} value={country}>
+            <MenuItem value="Worldwide">WorldWide</MenuItem>
             {countries.map((country) => {
               return <MenuItem value={country.value}>{country.name}</MenuItem>;
             })}
