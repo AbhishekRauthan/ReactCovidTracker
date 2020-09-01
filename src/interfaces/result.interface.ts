@@ -9,3 +9,12 @@ export interface Countries {
   name: string,
   value: string;
 }
+
+export interface DataInfo {
+  todayCases:number,
+  todayDeaths:number,
+  todayRecovered:number,
+  cases:number,
+  deaths:number,
+  recovered:number
+}
