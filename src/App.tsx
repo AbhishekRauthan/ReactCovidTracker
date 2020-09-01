@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FormControl, Select, MenuItem } from "@material-ui/core";
+import { FormControl, Select, MenuItem, Card, CardContent } from "@material-ui/core";
 import "./App.css";
 import { Countries, CountriesResult } from "./interfaces/result.interface";
 import Infobox from "./components/Infobox";
+import Map from "./components/Map";
 
 const App: React.FC = () => {
   const [countries, setCountries] = useState<Countries[]>([]);
@@ -37,23 +38,36 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="App">
-      <div className="app_header">
-        <h1>COVID-19 TRACKER</h1>
-        <FormControl className="app_dropbox">
-          <Select variant="outlined" onChange={countryChange} value={country}>
-            <MenuItem value="Worldwide">WorldWide</MenuItem>
-            {countries.map((country) => {
-              return <MenuItem value={country.value}>{country.name}</MenuItem>;
-            })}
-          </Select>
-        </FormControl>
+    <div className="app">
+      <div className="app_left">
+        <div className="app_header">
+          <h1>COVID-19 TRACKER</h1>
+          <FormControl className="app_dropbox">
+            <Select variant="outlined" onChange={countryChange} value={country}>
+              <MenuItem value="Worldwide">WorldWide</MenuItem>
+              {countries.map((country) => {
+                return (
+                  <MenuItem value={country.value}>{country.name}</MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </div>
+        <div className="app_stats">
+          <Infobox title="Coronavirus Cases" total={2000} cases={123} />
+          <Infobox title="Recovered" total={2000} cases={1234} />
+          <Infobox title="Deaths" total={2000} cases={12345} />
+        </div>
+        <div className="app_map">
+          <Map />
+        </div>
       </div>
-      <div className="app_stats">
-        <Infobox title="Coronavirus Cases" total={2000} cases={123}/>
-        <Infobox title="Recovered" total={2000} cases={1234}/>
-        <Infobox title="Deaths" total={2000} cases={12345}/>
-      </div>
+      <Card className="app_right">
+        <CardContent>
+          <h3>Live cases by country</h3>
+          <h3>Worldwide Live cases</h3>
+        </CardContent>
+      </Card>
     </div>
   );
 };
