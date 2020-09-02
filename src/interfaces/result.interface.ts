@@ -18,3 +18,8 @@ export interface DataInfo {
   deaths:number,
   recovered:number
 }
+
+export interface TableData {
+  country:string,
+  cases:number
+}

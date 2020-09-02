@@ -13,22 +13,26 @@ import {
   Countries,
   CountriesResult,
   DataInfo,
+  TableData,
 } from "./interfaces/result.interface";
 import Infobox from "./components/Infobox";
 import Map from "./components/Map";
+import Table from "./components/Table";
+import LineGraph from "./components/LineGraph";
 
 const App: React.FC = () => {
   const [countries, setCountries] = useState<Countries[]>([]);
   const [country, setCountry] = useState("Worldwide");
   const [countryInfo, setCountryInfo] = useState<DataInfo>();
+  const [tableData, setTableData] = useState<TableData[]>([]);
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setCountryInfo(data);
-      })
-  }, [])
+      });
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -45,7 +49,7 @@ const App: React.FC = () => {
               };
             }
           );
-
+          setTableData(result);
           setCountries(countries);
         });
     };
@@ -55,12 +59,11 @@ const App: React.FC = () => {
   const countryChange = async (e: any) => {
     const countryCode: string = e.target.value;
     setCountry(countryCode);
-    const url = countryCode === "Worldwide" ? `/all` : `/countries/${countryCode}`;
+    const url =
+      countryCode === "Worldwide" ? `/all` : `/countries/${countryCode}`;
     await fetch(`https://disease.sh/v3/covid-19${url}`)
       .then((result) => result.json())
       .then((data) => {
-
-        console.log(data);
         setCountryInfo(data);
       });
   };
@@ -105,7 +108,9 @@ const App: React.FC = () => {
       <Card className="app_right">
         <CardContent>
           <h3>Live cases by country</h3>
+          <Table countries={tableData} />
           <h3>Worldwide Live cases</h3>
+          <LineGraph casesType="cases"/>
         </CardContent>
       </Card>
     </div>
