@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 
 import "./App.css";
+import "leaflet/dist/leaflet.css"
 
 import {
   Countries,
@@ -25,6 +26,8 @@ const App: React.FC = () => {
   const [country, setCountry] = useState("Worldwide");
   const [countryInfo, setCountryInfo] = useState<DataInfo>();
   const [tableData, setTableData] = useState<TableData[]>([]);
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapZoom, setMapZoom] = useState(3);
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -102,7 +105,7 @@ const App: React.FC = () => {
           />
         </div>
         <div className="app_map">
-          <Map />
+          <Map center={mapCenter} zoom={mapZoom} />
         </div>
       </div>
       <Card className="app_right">

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
-import numeral from "numeral";
+import { options } from "../Option";
 
 const LineGraph: React.FC<{ casesType: string }> = ({ casesType }) => {
   const [data, setData] = useState<any[]>([]);
 
-  const graphData = (data:any, casesType:string) => {
+  const graphData = (data: any, casesType: string) => {
     let chartData = [];
     let lastDataPoint;
     for (let date in data.cases) {
@@ -22,19 +22,23 @@ const LineGraph: React.FC<{ casesType: string }> = ({ casesType }) => {
   };
 
   useEffect(() => {
-    fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
-      .then((res) => res.json())
-      .then((data) => {
-        let chartData = graphData(data, casesType);
-        setData(chartData);
-        console.log(chartData);
-      });
+    const fetchData = async () => {
+      await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
+        .then((res) => res.json())
+        .then((data) => {
+          let chartData = graphData(data, casesType);
+          setData(chartData);
+          console.log(chartData);
+        });
+    };
+    fetchData();
   }, [casesType]);
 
   return (
     <div>
       {data?.length > 0 && (
         <Line
+          options={options}
           data={{
             datasets: [
               {
