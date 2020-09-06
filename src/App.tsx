@@ -68,6 +68,8 @@ const App: React.FC = () => {
       .then((result) => result.json())
       .then((data) => {
         setCountryInfo(data);
+        setMapCenter({ lat: data.countryInfo.lat, lng: data.countryInfo.long});
+        setMapZoom(4)
       });
   };
 
